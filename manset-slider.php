@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Manşet Slider — iOS Clean (Segmented Pager)
  * Description: "manset" kategorisindeki görseller için slider. Koyu alt bar, numaralı segmentler; aktif segment cyan kutu + üstte üçgen. Hover’da geçiş, mobilde swipe.
- * Version: 2.2.0
+ * Version: 2.3.0
  * Author: Atlas
  * License: GPL2+
  */
@@ -11,19 +11,18 @@ if (!defined('ABSPATH')) exit;
 
 class Manset_Slider_Plugin {
     const SLUG = 'manset-slider';
-    const VER  = '2.2.0';
+    const VER  = '2.3.0';
 
     public function __construct() {
         add_shortcode('manset_slider', [$this, 'shortcode']);
         add_action('wp_enqueue_scripts', [$this, 'assets']);
     }
 
-    // cache-bust ile kayıt
     public function assets() {
         $css = plugin_dir_path(__FILE__) . 'assets/manset-slider.css';
         $js  = plugin_dir_path(__FILE__) . 'assets/manset-slider.js';
         $css_ver = file_exists($css) ? filemtime($css) : self::VER;
-        $js_ver  = file_exists($js)  ? filemtime($js)  : self::VER;
+        $js_ver  = file_exists($js)  ? filemtime($js) : self::VER;
 
         wp_register_style(self::SLUG, plugins_url('assets/manset-slider.css', __FILE__), [], $css_ver);
         wp_register_script(self::SLUG, plugins_url('assets/manset-slider.js', __FILE__), [], $js_ver, true);
@@ -97,7 +96,6 @@ class Manset_Slider_Plugin {
                 <?php endif; ?>
             </div>
 
-            <!-- Segmented number bar -->
             <div class="manset-slider__pager" role="tablist" aria-label="Manşet sayfaları">
                 <?php for ($n=0; $n<$i; $n++): ?>
                     <button class="manset-slider__dot<?php echo $n===0?' is-active':''; ?>"
