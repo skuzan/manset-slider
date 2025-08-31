@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Manşet Slider — iOS Clean (Segmented Pager)
- * Description: "manset" kategorisindeki görseller için slider. Altta koyu bar, numaralı segmentler; aktif segment cyan kutu + üstte üçgen işaret. Hover’da geçiş, mobilde swipe.
- * Version: 2.1.0
+ * Description: "manset" kategorisindeki görseller için slider. Koyu alt bar, numaralı segmentler; aktif segment cyan kutu + üstte üçgen. Hover’da geçiş, mobilde swipe.
+ * Version: 2.2.0
  * Author: Atlas
  * License: GPL2+
  */
@@ -11,13 +11,14 @@ if (!defined('ABSPATH')) exit;
 
 class Manset_Slider_Plugin {
     const SLUG = 'manset-slider';
-    const VER  = '2.1.0';
+    const VER  = '2.2.0';
 
     public function __construct() {
         add_shortcode('manset_slider', [$this, 'shortcode']);
         add_action('wp_enqueue_scripts', [$this, 'assets']);
     }
 
+    // cache-bust ile kayıt
     public function assets() {
         $css = plugin_dir_path(__FILE__) . 'assets/manset-slider.css';
         $js  = plugin_dir_path(__FILE__) . 'assets/manset-slider.js';

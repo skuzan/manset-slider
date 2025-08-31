@@ -1,6 +1,12 @@
 /* ===== iOS Clean + Segmented Pager ===== */
 .manset-slider{ --ms-aspect:16/9; position:relative; user-select:none; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Arial,sans-serif; }
-.manset-slider__viewport{ position:relative; width:100%; aspect-ratio:var(--ms-aspect); overflow:hidden; } /* köşe yok */
+
+/* Köşe yok, iOS swipe uyumu için touch-action */
+.manset-slider__viewport{
+  position:relative; width:100%; aspect-ratio:var(--ms-aspect);
+  overflow:hidden;
+  touch-action: pan-y; /* dikey scroll serbest, yatay bize ait */
+}
 .manset-slider__track{ display:flex; height:100%; transition:transform .45s ease; will-change:transform }
 .manset-slider__slide{ flex:0 0 100%; height:100%; position:relative }
 .manset-slider__slide img{ width:100%; height:100%; object-fit:cover; display:block }
@@ -11,30 +17,29 @@
 .manset-slider__arrow span{ font-size:26px; line-height:1; color:#111 }
 .manset-slider__prev{ left:12px } .manset-slider__next{ right:12px }
 
-/* ===== Bottom bar (dark, segmented) ===== */
+/* Alt bar (koyu, segmented) */
 .manset-slider__pager{
   display:flex; gap:0; justify-content:space-between; align-items:center;
   padding:14px 10px; margin-top:0;
-  background:#2c3138; /* koyu gri */
+  background:#2c3138;
   border-top:1px solid rgba(255,255,255,.08);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
   overflow-x:auto; scrollbar-width:none;
 }
 .manset-slider__pager::-webkit-scrollbar{ display:none }
 
-/* Number segments */
+/* Segment butonları */
 .manset-slider__dot{
   position:relative;
   min-width:44px; height:36px; padding:0 8px;
   background:transparent; border:0; cursor:pointer; outline:0;
   color:#e5e7eb; font-weight:700; font-size:15px;
   display:flex; align-items:center; justify-content:center;
-  /* dikey ayraç */
   box-shadow: inset -1px 0 0 rgba(255,255,255,.08);
 }
 .manset-slider__dot:first-child{ box-shadow:none; }
 
-/* active: cyan pill + top pointer */
+/* aktif: cyan + üst üçgen */
 .manset-slider__dot.is-active{
   background:#29e5b0; color:#fff; border-radius:6px; box-shadow:none;
 }
@@ -44,11 +49,22 @@
 }
 .manset-slider__dot:hover{ background:#29e5b0; color:#fff; border-radius:6px }
 
-/* number text */
 .manset-slider__dot-num{ line-height:1 }
 
-/* Boş durum & mobil */
+/* Boş durum & MOBİL küçültme */
 .manset-slider__empty{ color:#666; padding:12px }
 @media (max-width:768px){
-  .manset-slider__dot{ min-width:40px; height:34px; font-size:14px }
+  .manset-slider__pager{ padding:10px 6px; }
+  .manset-slider__dot{
+    min-width:28px; /* 40→28 */
+    height:28px;    /* 34→28 */
+    font-size:12px; /* 14→12 */
+    padding:0 4px;
+  }
+  .manset-slider__dot.is-active::before{
+    top:-6px; right:6px;
+    border-left:5px solid transparent;
+    border-right:5px solid transparent;
+    border-bottom:6px solid #29e5b0;
+  }
 }
